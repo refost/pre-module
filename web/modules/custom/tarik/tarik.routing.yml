@@ -1,6 +1,7 @@
 tarik.cats:
   path: '/tarik/cats'
   defaults:
+    _title: 'Hello! You can add here a photo of your cat.'
     _controller: 'Drupal\tarik\Controller\CatsController::content'
   requirements:
     _permission: 'access content'
