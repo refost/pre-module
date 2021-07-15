@@ -1,0 +1,6 @@
+tarik.cats:
+  path: '/tarik/cats'
+  defaults:
+    _controller: 'Drupal\tarik\Controller\CatsController::content'
+  requirements:
+    _permission: 'access content'
