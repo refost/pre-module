@@ -30,7 +30,7 @@ class FormCats extends FormBase {
 
     $form['submit'] = [
       '#type' => 'submit',
-      '#value' => $this->t('Add cat’'),
+      '#value' => $this->t('Add cat'),
     ];
     return $form;
   }

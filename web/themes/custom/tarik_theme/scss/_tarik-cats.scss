@@ -1,8 +1,39 @@
 .tarik-cats{
   .title{
     margin-top: 30px;
-    border-radius: 24px;
+    border-radius: 50px;
+    line-height: 100px;
     background-color: #bdf6d0;
     text-align: center;
   }
 }
+
+
+.form-cats{
+  padding: 30px 0;
+  margin: 0 auto;
+  width: 80%;
+  label{
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    font-weight: 900;
+    color: #5a5a5a;
+    font-size: 24px;
+  }
+  input{
+    &::placeholder{
+      color: #9d9d9d;
+    }
+  }
+  .button{
+    display: block;
+    margin: 0 auto;
+    width: 200px;
+    height: 50px;
+    border-radius: 25px;
+    color: #5a5a5a;
+    background-color: #bdf6d0;
+  }
+}
+

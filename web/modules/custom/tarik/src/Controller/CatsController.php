@@ -12,7 +12,7 @@ class CatsController {
    */
   public function content():array {
 
-    return Drupal::formBuilder()->getForm('Drupal\tarik\Form\FormCats');
+    return \Drupal::formBuilder()->getForm('Drupal\tarik\Form\FormCats');
   }
 
 }
