@@ -11,9 +11,8 @@ class CatsController {
    * Display simple page.
    */
   public function content():array {
-    return [
-      '#markup' => '',
-    ];
+
+    return Drupal::formBuilder()->getForm('Drupal\tarik\Form\FormCats');
   }
 
 }
