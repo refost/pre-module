@@ -4,6 +4,8 @@ namespace Drupal\tarik\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\HtmlCommand;
 
 /**
  * Provides route responses for the module.
@@ -27,12 +29,23 @@ class FormCats extends FormBase {
       '#title' => $this->t('Your cat’s name:'),
       '#placeholder' => $this->t('min length - 2 symbols, min - 32'),
       '#required' => TRUE,
+      '#maxlength' => 32,
     ];
 
     $form['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Add cat'),
+      '#ajax' => [
+        'callback' => '::setMessage',
+        'event' => 'click',
+      ],
     ];
+
+    $form['massage'] = [
+      '#type' => 'markup',
+      '#markup' => '<div id="result_message"></div>',
+    ];
+
     return $form;
   }
 
@@ -40,17 +53,40 @@ class FormCats extends FormBase {
    * Return messenge about form status.
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    \Drupal::messenger()->addStatus(t('Sending successful. The name is correct '));
   }
 
   /**
    * Form validation.
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
-    if (2 > strlen($form_state->getValue('name')) ||
-      32 < strlen($form_state->getValue('name'))) {
-      $form_state->setErrorByName('name', $this->t('Name must be longer than 2 symbols and shorter than 32'));
+  }
+
+  /**
+   * Function for message with info what was sended.
+   */
+  public function setMessage(array &$form, FormStateInterface $form_state):object {
+
+    $response = new AjaxResponse();
+    if (2 > strlen($form_state->getValue('name'))) {
+      $response->addCommand(
+        new HtmlCommand(
+          '#result_message',
+          '<div class="form-cat-message">' . $this->t('Name of your cat too short')
+        )
+      );
     }
+    else {
+      $response->addCommand(
+        new HtmlCommand(
+          '#result_message',
+          '<div class="form-cat-message">' . $this->t('Thanks for sending. The name of cat is @result', ['@result' => ($form_state->getValue('name'))])
+        )
+      );
+    }
+
+    \Drupal::messenger()->deleteAll();
+
+    return $response;
   }
 
 }
