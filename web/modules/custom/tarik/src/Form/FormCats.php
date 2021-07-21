@@ -2,6 +2,7 @@
 
 namespace Drupal\tarik\Form;
 
+use Drupal\Core\Ajax\CssCommand;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
@@ -81,12 +82,11 @@ class FormCats extends FormBase {
   /**
    * Symbols input validation.
    */
-  public function validSymb(array &$form, FormStateInterface $form_state):object {
+  public function validSymb(array &$form, FormStateInterface $form_state) {
     $regular = '/[-_@aA-zZ.]/';
     $line = $form_state->getValue('email');
 
     $response = new AjaxResponse();
-
     for ($i = 0; $i < strlen($line); $i++) {
       if (!preg_match($regular, $line[$i])) {
         $response->addCommand(
@@ -94,6 +94,9 @@ class FormCats extends FormBase {
             '#valid_message',
             '<div class="invalid-message">' . $this->t('You can use only letters and "-" or "_" or "@"')
           )
+        );
+        $response->addCommand(
+          new CssCommand('.form-email', ['background' => 'rgba(243, 150, 154, 0.5)'])
         );
         break;
       }
@@ -103,6 +106,9 @@ class FormCats extends FormBase {
             '#valid_message',
             ''
           )
+        );
+        $response->addCommand(
+          new CssCommand('.form-email', ['background' => '#fff'])
         );
       }
     }
@@ -114,11 +120,12 @@ class FormCats extends FormBase {
    */
   public function setMessage(array &$form, FormStateInterface $form_state):object {
     $response = new AjaxResponse();
+
     if (2 > strlen($form_state->getValue('name'))) {
       $response->addCommand(
         new HtmlCommand(
           '#result_message',
-          '<div class="form-cat-message">' . $this->t('Name of your cat too short')
+          '<div class="form-cat-message error">' . $this->t('Name of your cat too short')
         )
       );
     }
@@ -126,7 +133,7 @@ class FormCats extends FormBase {
       $response->addCommand(
         new HtmlCommand(
           '#result_message',
-          '<div class="form-cat-message">' . $this->t('Your email is not supported')
+          '<div class="form-cat-message error">' . $this->t('Your email is not supported')
         )
       );
     }

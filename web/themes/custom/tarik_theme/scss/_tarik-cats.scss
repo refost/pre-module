@@ -35,18 +35,27 @@
     color: #5a5a5a;
     background-color: #bdf6d0;
   }
-  .form-cat-message{
-    margin-top: 30px;
-    text-align: center;
-    font-weight: bold;
-    color: #5a5a5a;
-    border-radius: 12px;
-    background: rgba(189, 246, 208, 0.7);
-    box-shadow: -20px 4px 26px 19px rgba(189, 246, 208, 0.5),
-                20px 4px 26px 19px rgba(189, 246, 208, 0.5);
-  }
+}
+.form-cat-message{
+  margin-top: 30px;
+  text-align: center;
+  font-weight: bold;
+  color: #5a5a5a;
+  border-radius: 12px;
+  background: rgba(189, 246, 208, 0.7);
+  box-shadow: -20px 4px 26px 19px rgba(189, 246, 208, 0.5),
+  20px 4px 26px 19px rgba(189, 246, 208, 0.5);
 }
 
+.error{
+  background: rgba(243, 150, 154, 0.7);
+  box-shadow: -20px 4px 26px 19px rgba(243, 150, 154, 0.5),
+  20px 4px 26px 19px rgba(243, 150, 154, 0.5);
+}
+.invalid-message{
+  color: rgb(243, 150, 154);
+  margin-bottom: 15px;
+}
 
 
 
