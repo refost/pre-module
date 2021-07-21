@@ -38,7 +38,7 @@ class FormCats extends FormBase {
       '#title' => $this->t('Your email:'),
       '#placeholder' => $this->t('your@mail.com'),
       '#required' => TRUE,
-      '#pattern' => '/[-_aA-zZ]{2,30}@[a-z]{2,10}\.[a-z]{2,10}/',
+      '#pattern' => '/^[-_aA-zZ]{2,30}@([a-z]{2,10})\.[a-z]{2,10}$/',
       '#ajax' => [
         'callback' => '::validSymb',
         'event' => 'keyup',
@@ -129,7 +129,7 @@ class FormCats extends FormBase {
         )
       );
     }
-    elseif (!preg_match('/[-_aA-zZ]{2,30}@[a-z]{2,10}\.[a-z]{2,10}/', $form_state->getValue('email'))) {
+    elseif (!preg_match('/^[-_aA-zZ]{2,30}@([a-z]{2,10})\.[a-z]{2,10}$/', $form_state->getValue('email'))) {
       $response->addCommand(
         new HtmlCommand(
           '#result_message',
