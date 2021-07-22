@@ -33,6 +33,10 @@ class FormCats extends FormBase {
       '#maxlength' => 32,
     ];
 
+    $form['email-valid'] = [
+      '#type' => 'markup',
+      '#markup' => '<div id="valid_message"></div>',
+    ];
     $form['email'] = [
       '#type' => 'email',
       '#title' => $this->t('Your email:'),
@@ -44,10 +48,7 @@ class FormCats extends FormBase {
         'event' => 'keyup',
       ],
     ];
-    $form['email-valid'] = [
-      '#type' => 'markup',
-      '#markup' => '<div id="valid_message"></div>',
-    ];
+
 
     $form['upload-img'] = [
       '#type' => 'managed_file',
@@ -105,7 +106,7 @@ class FormCats extends FormBase {
           )
         );
         $response->addCommand(
-          new CssCommand('.form-email', ['background' => 'rgba(243, 150, 154, 0.5)'])
+          new CssCommand('.form-email', ['border-color' => 'red'])
         );
         break;
       }
