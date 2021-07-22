@@ -44,10 +44,20 @@ class FormCats extends FormBase {
         'event' => 'keyup',
       ],
     ];
-
     $form['email-valid'] = [
       '#type' => 'markup',
       '#markup' => '<div id="valid_message"></div>',
+    ];
+
+    $form['upload-img'] = [
+      '#type' => 'managed_file',
+      '#title' => t('Profile Picture'),
+      '#required' => TRUE,
+      '#upload_location' => 'public://images/',
+      '#upload_validators' => [
+        'file_validate_extensions' => ['png jpg jpeg'],
+        'file_validate_size' => [2097152],
+      ],
     ];
 
     $form['submit'] = [
@@ -58,7 +68,6 @@ class FormCats extends FormBase {
         'event' => 'click',
       ],
     ];
-
     $form['massage'] = [
       '#type' => 'markup',
       '#markup' => '<div id="result_message"></div>',
