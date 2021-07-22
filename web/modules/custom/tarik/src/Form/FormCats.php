@@ -25,12 +25,17 @@ class FormCats extends FormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
 
+    $form['name-valid'] = [
+      '#type' => 'markup',
+      '#markup' => '<div id="name_message"></div>',
+    ];
     $form['name'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Your cat’s name:'),
       '#placeholder' => $this->t('min length - 2 symbols, min - 32'),
       '#required' => TRUE,
       '#maxlength' => 32,
+      '#pattern' => '[aA-zZ]{2,32}',
     ];
 
     $form['email-valid'] = [
@@ -49,7 +54,6 @@ class FormCats extends FormBase {
       ],
     ];
 
-
     $form['upload-img'] = [
       '#type' => 'managed_file',
       '#title' => t('Profile Picture'),
@@ -61,6 +65,10 @@ class FormCats extends FormBase {
       ],
     ];
 
+    $form['massage'] = [
+      '#type' => 'markup',
+      '#markup' => '<div id="result_message"></div>',
+    ];
     $form['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Add cat'),
@@ -68,10 +76,6 @@ class FormCats extends FormBase {
         'callback' => '::setMessage',
         'event' => 'click',
       ],
-    ];
-    $form['massage'] = [
-      '#type' => 'markup',
-      '#markup' => '<div id="result_message"></div>',
     ];
 
     return $form;
@@ -118,7 +122,7 @@ class FormCats extends FormBase {
           )
         );
         $response->addCommand(
-          new CssCommand('.form-email', ['background' => '#fff'])
+          new CssCommand('.form-email', ['border-color' => '#ced4da'])
         );
       }
     }
@@ -131,19 +135,12 @@ class FormCats extends FormBase {
   public function setMessage(array &$form, FormStateInterface $form_state):object {
     $response = new AjaxResponse();
 
-    if (2 > strlen($form_state->getValue('name'))) {
+    if ($form_state->hasAnyErrors()) {
       $response->addCommand(
         new HtmlCommand(
           '#result_message',
-          '<div class="form-cat-message error">' . $this->t('Name of your cat too short')
-        )
-      );
-    }
-    elseif (!preg_match('/^[-_aA-zZ]{2,30}@([a-z]{2,10})\.[a-z]{2,10}$/', $form_state->getValue('email'))) {
-      $response->addCommand(
-        new HtmlCommand(
-          '#result_message',
-          '<div class="form-cat-message error">' . $this->t('Your email is not supported')
+          '<div class="form-cat-message error">' .
+          $this->t('you entered incorrect information')
         )
       );
     }
