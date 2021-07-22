@@ -135,6 +135,20 @@ class FormCats extends FormBase {
   public function setMessage(array &$form, FormStateInterface $form_state):object {
     $response = new AjaxResponse();
 
+    if (!preg_match('/^[aA-zZ]{2,32}$/', $form_state->getValue('name'))) {
+      $response->addCommand(
+        new HtmlCommand(
+          '#name_message',
+          '<div class="invalid-message">' . $this->t("The cat's name should contain only Latin characters")
+        )
+      );
+      $response->addCommand(
+        new CssCommand(
+          '#edit-name',
+          ['border-color' => 'red']
+        )
+      );
+    }
     if ($form_state->hasAnyErrors()) {
       $response->addCommand(
         new HtmlCommand(
