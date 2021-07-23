@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * Creating database for module
+ */
+function tarik_schema():array {
+  $schema['tarik'] = [
+    'fields' => [
+      'id' => [
+        'type' =>'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'name' => [
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'email' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'image' => [
+        'type' => 'int',
+        'length' => 20,
+        'not null' => FALSE,
+      ],
+      'date' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+    ],
+    'primary key' => [
+      'id',
+    ],
+  ];
+
+  return $schema;
+}
