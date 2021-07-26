@@ -3,10 +3,13 @@
 namespace Drupal\tarik\Form;
 
 use Drupal\Core\Ajax\CssCommand;
+use Drupal\Core\Ajax\InsertCommand;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Drupal\file\Entity\File;
 
 /**
  * Provides route responses for the module.
@@ -47,7 +50,7 @@ class FormCats extends FormBase {
       '#title' => $this->t('Your email:'),
       '#placeholder' => $this->t('your@mail.com'),
       '#required' => TRUE,
-      '#pattern' => '/^[-_aA-zZ]{2,30}@([a-z]{2,10})\.[a-z]{2,10}$/',
+      '#pattern' => '[-_aA-zZ]{2,30}@([a-z]{2,10})\.[a-z]{2,10}',
       '#ajax' => [
         'callback' => '::validSymb',
         'event' => 'keyup',
@@ -85,6 +88,19 @@ class FormCats extends FormBase {
    * Return messenge about form status.
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
+    $picture = $form_state->getValue('upload-img');
+    $file = File::load($picture[0]);
+    $file->setPermanent();
+    $file->save();
+    \Drupal::database()
+      ->insert('tarik')
+      ->fields([
+        'name' => $form_state->getValue('name'),
+        'email' => $form_state->getValue('email'),
+        'date' => time(),
+        'image' => $picture[0],
+      ])
+      ->execute();
   }
 
   /**
