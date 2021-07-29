@@ -3,6 +3,7 @@
 namespace Drupal\tarik\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\file\Entity\File;
 
 /**
  * Provides route responses for the module.
@@ -16,9 +17,10 @@ class CatsController extends ControllerBase {
     $query = \Drupal::database()->select('tarik', 'cats');
     $query->fields('cats', ['name', 'email', 'image', 'date']);
     $results = $query->execute()->fetchAll();
+    $rows = [];
     foreach ($results as $data) {
       $fid = $data->image;
-      $file = \Drupal\file\Entity\File::load($fid);
+      $file = File::load($fid);
       $path = $file->getFileUri();
 
       $image_render = [
@@ -35,8 +37,6 @@ class CatsController extends ControllerBase {
       ];
     }
 
-    arsort($rows);
-
     $header_table = [
       'name' => t('Name'),
       'email' => t('Email'),
@@ -44,11 +44,15 @@ class CatsController extends ControllerBase {
       'date' => t('Date'),
     ];
 
+    if (!$rows == NULL) {
+      krsort($rows);
+    }
+
     $build['table'] = [
       '#type' => 'table',
       '#header' => $header_table,
       '#rows' => $rows,
-      '#empty' => t('No data found'),
+      '#empty' => t('Your are first user'),
     ];
 
     return $build;

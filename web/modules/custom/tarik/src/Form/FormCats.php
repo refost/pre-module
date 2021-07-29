@@ -3,12 +3,11 @@
 namespace Drupal\tarik\Form;
 
 use Drupal\Core\Ajax\CssCommand;
-use Drupal\Core\Ajax\InsertCommand;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Drupal\Core\Ajax\RedirectCommand;
 use Drupal\file\Entity\File;
 
 /**
@@ -112,7 +111,7 @@ class FormCats extends FormBase {
   /**
    * Symbols input validation.
    */
-  public function validSymb(array &$form, FormStateInterface $form_state) {
+  public function validSymb(array &$form, FormStateInterface $form_state):object {
     $regular = '/[-_@aA-zZ.]/';
     $line = $form_state->getValue('email');
 
@@ -149,6 +148,8 @@ class FormCats extends FormBase {
    * Function for message with info what was sended.
    */
   public function setMessage(array &$form, FormStateInterface $form_state):object {
+    \Drupal::messenger()->deleteAll();
+
     $response = new AjaxResponse();
 
     if (!preg_match('/^[aA-zZ]{2,32}$/', $form_state->getValue('name'))) {
@@ -175,17 +176,9 @@ class FormCats extends FormBase {
       );
     }
     else {
-      $response->addCommand(
-        new HtmlCommand(
-          '#result_message',
-          '<div class="form-cat-message">' .
-          $this->t('Thanks for sending. The name of cat is @result',
-            ['@result' => ($form_state->getValue('name'))])
-        )
-      );
+      \Drupal::messenger()->addStatus(t('Thanks for sending. You can see your cat in table in down'));
+      $response->addCommand(new RedirectCommand('\tarik\cats'));
     }
-
-    \Drupal::messenger()->deleteAll();
 
     return $response;
   }
