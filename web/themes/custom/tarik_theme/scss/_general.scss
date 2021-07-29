@@ -1,0 +1,12 @@
+.highlighted {
+  .alert-success {
+    margin-top: 50px;
+    background-color: #ade2d8;
+    border-color: transparent;
+    border-radius: 30px;
+    text-align: center;
+    .btn-close{
+      display: none;
+    }
+  }
+}

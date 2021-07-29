@@ -7,6 +7,24 @@
     text-align: center;
     color: #fff;
   }
+
+  .table-responsive{
+    .odd{
+      background-color: rgba(173, 226, 216, 0.5);
+    }
+    tbody{
+      tr{
+        &:hover{
+          transition: 0.5s;
+          background-color: rgba(173, 226, 216, 1);
+        }
+      }
+      td{
+        text-align: center;
+        vertical-align: middle;
+      }
+    }
+  }
 }
 
 
