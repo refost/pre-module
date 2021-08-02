@@ -1,0 +1,12 @@
+<?php
+
+/**
+ * Implementing hook_theme().
+ */
+function tarik_theme($existing, $type, $theme, $path){
+  return [
+    'tarik_template' =>[
+      'variables' => ['form' => [], 'thead' => [],'trows' => []],
+    ],
+  ];
+}

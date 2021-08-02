@@ -14,6 +14,7 @@ class CatsController extends ControllerBase {
    * Create table with cats.
    */
   public function table():array {
+
     $query = \Drupal::database()->select('tarik', 'cats');
     $query->fields('cats', ['name', 'email', 'image', 'date']);
     $results = $query->execute()->fetchAll();
@@ -23,7 +24,7 @@ class CatsController extends ControllerBase {
       $file = File::load($fid);
       $path = $file->getFileUri();
 
-      $image_render = [
+      $image = [
         '#theme' => 'image_style',
         '#style_name' => 'thumbnail',
         '#uri' => $path,
@@ -32,30 +33,16 @@ class CatsController extends ControllerBase {
       $rows[] = [
         'name' => $data->name,
         'email' => $data->email,
-        'image' => ['data' => $image_render],
+        'image' => ['data' => $image],
         'date' => date('Y-m-d', $data->date),
       ];
     }
-
-    $header_table = [
-      'name' => t('Name'),
-      'email' => t('Email'),
-      'image' => t('image'),
-      'date' => t('Date'),
-    ];
 
     if (!$rows == NULL) {
       krsort($rows);
     }
 
-    $build['table'] = [
-      '#type' => 'table',
-      '#header' => $header_table,
-      '#rows' => $rows,
-      '#empty' => t('Your are first user'),
-    ];
-
-    return $build;
+    return $rows;
   }
 
   /**
@@ -65,7 +52,19 @@ class CatsController extends ControllerBase {
     $formCats = \Drupal::formBuilder()->getForm('Drupal\tarik\Form\FormCats');
     $table = $this->table();
 
-    return [$formCats, $table];
+    $header = [
+      'name' => $this->t('Name'),
+      'email' => $this->t('Email'),
+      'image' => $this->t('image'),
+      'date' => $this->t('Date'),
+    ];
+
+    return [
+      '#theme' => 'tarik_template',
+      '#form' => $formCats,
+      '#thead' => $header,
+      '#trows' => $table,
+    ];
   }
 
 }

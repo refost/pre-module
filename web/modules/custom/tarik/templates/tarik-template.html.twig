@@ -1,0 +1,14 @@
+{{ form }}
+
+<div class="result">
+  {% for row in trows %}
+  <div class="card-{{ loop.index }}">
+    <div class="image">{{ row['image']}}</div>
+    <div class="name">{{ row['name']}}</div>
+    <div class="email">{{ row['email']}}</div>
+    <div class="date">{{ row['date']}}</div>
+  </div>
+  {% endfor %}
+</div>
+
+
