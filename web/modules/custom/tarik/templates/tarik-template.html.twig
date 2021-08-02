@@ -1,14 +1,19 @@
+{{ attach_library('tarik/tariklibraries') }}
+
 {{ form }}
 
 <div class="result">
   {% for row in trows %}
   <div class="card-{{ loop.index }}">
     <div class="image">{{ row['image']}}</div>
-    <div class="name">{{ row['name']}}</div>
-    <div class="email">{{ row['email']}}</div>
-    <div class="date">{{ row['date']}}</div>
+    <div class="name">{{ thead['name']}}: {{ row['name']}}</div>
+    <div class="email">{{ thead['email']}}: {{ row['email']}}</div>
+    <div class="date">{{ thead['date']}}: {{ row['date']}}</div>
   </div>
   {% endfor %}
 </div>
-
+<div id="imgModal">
+  <span class="close">&times;</span>
+  <img class="modal-result" id="img01">
+</div>
 

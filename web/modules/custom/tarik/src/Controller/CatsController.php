@@ -25,9 +25,13 @@ class CatsController extends ControllerBase {
       $path = $file->getFileUri();
 
       $image = [
-        '#theme' => 'image_style',
-        '#style_name' => 'thumbnail',
+        '#theme' => 'image',
         '#uri' => $path,
+        '#attributes' => [
+          'class' => 'cat-picture',
+          'width' => 10,
+          'height' => 10
+        ]
       ];
 
       $rows[] = [
