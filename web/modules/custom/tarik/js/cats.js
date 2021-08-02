@@ -8,7 +8,11 @@ for (let i = 0; i < images.length; i++) {
     modalImg.src = this.src;
   };
 }
-let span = document.getElementsByClassName("close")[0];
+let span = document.getElementsByClassName("close-btn")[0];
 span.onclick = function () {
+  modal.style.display = "none";
+};
+
+modal.onclick = function () {
   modal.style.display = "none";
 };

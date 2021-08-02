@@ -2,18 +2,38 @@
 
 {{ form }}
 
-<div class="result">
+<div class="result-cat row">
   {% for row in trows %}
-  <div class="card-{{ loop.index }}">
+  {% if loop.last == true and  loop.index % 2 != 0 %}
+  <div class="card-cat col-12">
+    {% else %}
+    <div class="card-cat col-6">
+    {% endif %}
     <div class="image">{{ row['image']}}</div>
-    <div class="name">{{ thead['name']}}: {{ row['name']}}</div>
-    <div class="email">{{ thead['email']}}: {{ row['email']}}</div>
-    <div class="date">{{ thead['date']}}: {{ row['date']}}</div>
+    <div class="name">
+      <span class="title-row">
+        {{ thead['name']}}:
+      </span>
+      {{ row['name']}}
+    </div>
+    <div class="email">
+      <span class="title-row">
+        {{ thead['email']}}:
+      </span>
+      {{ row['email']}}
+    </div>
+    <div class="date">
+      <span class="title-row">
+        {{ thead['date']}}:
+      </span>
+      {{ row['date']}}
+    </div>
   </div>
   {% endfor %}
 </div>
 <div id="imgModal">
-  <span class="close">&times;</span>
-  <img class="modal-result" id="img01">
+  <div class="img-container">
+    <span class="close-btn">&times;</span>
+    <img class="modal-result" id="img01">
 </div>
-
+</div>

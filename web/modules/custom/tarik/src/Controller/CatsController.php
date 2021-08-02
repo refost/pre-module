@@ -4,6 +4,7 @@ namespace Drupal\tarik\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\file\Entity\File;
+use Drupal\Core\Datetime\DrupalDateTime;
 
 /**
  * Provides route responses for the module.
@@ -29,8 +30,7 @@ class CatsController extends ControllerBase {
         '#uri' => $path,
         '#attributes' => [
           'class' => 'cat-picture',
-          'width' => 10,
-          'height' => 10
+          'alt' => 'cat'
         ]
       ];
 
@@ -38,7 +38,7 @@ class CatsController extends ControllerBase {
         'name' => $data->name,
         'email' => $data->email,
         'image' => ['data' => $image],
-        'date' => date('Y-m-d', $data->date),
+        'date' => date('d-m-Y H:i:s', $data->date),
       ];
     }
 
