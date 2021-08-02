@@ -30,7 +30,9 @@ class CatsController extends ControllerBase {
         '#uri' => $path,
         '#attributes' => [
           'class' => 'cat-picture',
-          'alt' => 'cat'
+          'alt' => 'cat',
+          'width' => 250,
+          'height' => 250
         ]
       ];
 

@@ -8,32 +8,33 @@
   <div class="card-cat col-12">
     {% else %}
     <div class="card-cat col-6">
-    {% endif %}
-    <div class="image">{{ row['image']}}</div>
-    <div class="name">
+      {% endif %}
+      <div class="image">{{ row['image']}}</div>
+      <div class="name">
       <span class="title-row">
         {{ thead['name']}}:
       </span>
-      {{ row['name']}}
-    </div>
-    <div class="email">
+        {{ row['name']}}
+      </div>
+      <div class="email">
       <span class="title-row">
         {{ thead['email']}}:
       </span>
-      {{ row['email']}}
-    </div>
-    <div class="date">
+        {{ row['email']}}
+      </div>
+      <div class="date">
       <span class="title-row">
         {{ thead['date']}}:
       </span>
-      {{ row['date']}}
+        {{ row['date']}}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <div id="imgModal">
+    <div class="img-container">
+      <span class="close-btn">&times;</span>
+      <img class="modal-result" id="img01" alt="cat" width="100%" height="auto">
     </div>
   </div>
-  {% endfor %}
-</div>
-<div id="imgModal">
-  <div class="img-container">
-    <span class="close-btn">&times;</span>
-    <img class="modal-result" id="img01">
-</div>
 </div>
