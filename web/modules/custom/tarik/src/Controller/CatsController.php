@@ -4,8 +4,9 @@ namespace Drupal\tarik\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\file\Entity\File;
-use Drupal\Core\Datetime\DrupalDateTime;
-
+//use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
 /**
  * Provides route responses for the module.
  */
@@ -17,7 +18,7 @@ class CatsController extends ControllerBase {
   public function table():array {
 
     $query = \Drupal::database()->select('tarik', 'cats');
-    $query->fields('cats', ['name', 'email', 'image', 'date']);
+    $query->fields('cats', ['id','name', 'email', 'image', 'date']);
     $results = $query->execute()->fetchAll();
     $rows = [];
     foreach ($results as $data) {
@@ -25,6 +26,8 @@ class CatsController extends ControllerBase {
       $file = File::load($fid);
       $path = $file->getFileUri();
 
+      $url_delete = Url::fromRoute('tarik.delete_form', ['id' => $data->id], []);
+      $linkDelete = Link::fromTextAndUrl('Delete', $url_delete);
       $image = [
         '#theme' => 'image',
         '#uri' => $path,
@@ -41,6 +44,7 @@ class CatsController extends ControllerBase {
         'email' => $data->email,
         'image' => ['data' => $image],
         'date' => date('d-m-Y H:i:s', $data->date),
+        'delete' => $linkDelete,
       ];
     }
 
@@ -64,7 +68,7 @@ class CatsController extends ControllerBase {
       'image' => $this->t('image'),
       'date' => $this->t('Date'),
     ];
-
+    
     return [
       '#theme' => 'tarik_template',
       '#form' => $formCats,

@@ -28,6 +28,11 @@
       </span>
         {{ row['date']}}
       </div>
+      {% if user.hasPermission('administer nodes') %}
+      <div class="manage">
+        {{ row['delete'] }}
+      </div>
+      {% endif %}
     </div>
     {% endfor %}
   </div>
