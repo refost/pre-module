@@ -29,7 +29,7 @@ class DeleteForm extends ConfirmFormBase {
   }
 
   public function getDescription() {
-    return t('do you want to delete number %id ?', ['%id' => $this->id]);
+    return t('Are you sure?');
   }
 
   /**

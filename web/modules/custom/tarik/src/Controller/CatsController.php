@@ -12,6 +12,21 @@ use Drupal\Core\Url;
  */
 class CatsController extends ControllerBase {
 
+  public function linkDelete($link) {
+    return [
+      '#type' => 'link',
+      '#title' => 'Delete',
+      '#url' => $link,
+      '#options' => [
+        'attributes' => [
+          'class' => ['use-ajax'],
+          'data-dialog-type' => 'modal',
+      ]
+    ],
+      '#attached' => ['library' => ['core/drupal.dialog.ajax']],
+    ];
+  }
+
   /**
    * Create table with cats.
    */
@@ -27,7 +42,8 @@ class CatsController extends ControllerBase {
       $path = $file->getFileUri();
 
       $url_delete = Url::fromRoute('tarik.delete_form', ['id' => $data->id], []);
-      $linkDelete = Link::fromTextAndUrl('Delete', $url_delete);
+      $linkDelete = $this->linkDelete($url_delete);
+
       $image = [
         '#theme' => 'image',
         '#uri' => $path,
@@ -68,7 +84,7 @@ class CatsController extends ControllerBase {
       'image' => $this->t('image'),
       'date' => $this->t('Date'),
     ];
-    
+
     return [
       '#theme' => 'tarik_template',
       '#form' => $formCats,
