@@ -154,6 +154,12 @@
   &:hover{
     transition: 0.5s;
     background-color: rgba(173, 226, 216, 1);
+    .manage{
+      a{
+        transition: 0.5s;
+        background: #4aa48a;
+      }
+    }
   }
   .cat-picture{
     height: 100%;
@@ -171,5 +177,17 @@
   .title-row{
     font-weight: bold;
     display: block;
+  }
+  .manage{
+    padding-top: 25px;
+    width: 250px;
+    display: flex;
+    justify-content: space-around;
+    a{
+      display: block;
+      width: 75px;
+      line-height: 35px;
+      @include btn();
+  }
   }
 }

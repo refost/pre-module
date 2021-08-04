@@ -1,0 +1,14 @@
+@mixin btn{
+  background: #ade2d8;
+  border: 1px solid #78C2AD;
+  border-radius: 5px;
+  color: #fff;
+  text-decoration: none;
+  &:hover{
+    transition: 0.5s;
+    background: #5ac5a9;
+  }
+  &:focus{
+    box-shadow: none;
+  }
+}

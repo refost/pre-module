@@ -38,6 +38,7 @@ class CatsController extends ControllerBase {
     $query->fields('cats', ['id', 'name', 'email', 'image', 'date']);
     $results = $query->execute()->fetchAll();
     $rows = [];
+    $linkEdit = t('Edit');
     foreach ($results as $data) {
       $fid = $data->image;
       $file = File::load($fid);
@@ -63,6 +64,7 @@ class CatsController extends ControllerBase {
         'image' => ['data' => $image],
         'date' => date('d-m-Y H:i:s', $data->date),
         'delete' => $linkDelete,
+        'edit' => $linkEdit,
       ];
     }
 
