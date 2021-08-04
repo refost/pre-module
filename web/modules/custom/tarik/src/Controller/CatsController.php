@@ -4,15 +4,17 @@ namespace Drupal\tarik\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\file\Entity\File;
-//use Drupal\Core\Datetime\DrupalDateTime;
-use Drupal\Core\Link;
 use Drupal\Core\Url;
+
 /**
  * Provides route responses for the module.
  */
 class CatsController extends ControllerBase {
 
-  public function linkDelete($link) {
+  /**
+   * Function create link that activate modal window.
+   */
+  public function linkDelete($link):array {
     return [
       '#type' => 'link',
       '#title' => 'Delete',
@@ -21,8 +23,8 @@ class CatsController extends ControllerBase {
         'attributes' => [
           'class' => ['use-ajax'],
           'data-dialog-type' => 'modal',
-      ]
-    ],
+        ],
+      ],
       '#attached' => ['library' => ['core/drupal.dialog.ajax']],
     ];
   }
@@ -33,7 +35,7 @@ class CatsController extends ControllerBase {
   public function table():array {
 
     $query = \Drupal::database()->select('tarik', 'cats');
-    $query->fields('cats', ['id','name', 'email', 'image', 'date']);
+    $query->fields('cats', ['id', 'name', 'email', 'image', 'date']);
     $results = $query->execute()->fetchAll();
     $rows = [];
     foreach ($results as $data) {
