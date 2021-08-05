@@ -42,11 +42,11 @@ class EditForm extends FormBase {
 
     $this->fid = $data['image'];
 
-    $form['name-valid'] = [
+    $form['edit-name-valid'] = [
       '#type' => 'markup',
-      '#markup' => '<div id="name_message"></div>',
+      '#markup' => '<div id="edit-name_message"></div>',
     ];
-    $form['name'] = [
+    $form['edit-name'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Your cat’s name:'),
       '#placeholder' => $this->t('min length - 2 symbols, min - 32'),
@@ -56,11 +56,11 @@ class EditForm extends FormBase {
       '#pattern' => '[aA-zZ]{2,32}',
     ];
 
-    $form['email-valid'] = [
+    $form['edit-email-valid'] = [
       '#type' => 'markup',
-      '#markup' => '<div id="valid_message"></div>',
+      '#markup' => '<div id="edit-valid_message"></div>',
     ];
-    $form['email'] = [
+    $form['edit-email'] = [
       '#type' => 'email',
       '#title' => $this->t('Your email:'),
       '#placeholder' => $this->t('your@mail.com'),
@@ -68,12 +68,12 @@ class EditForm extends FormBase {
       '#required' => TRUE,
       '#pattern' => '[-_aA-zZ]{2,30}@([a-z]{2,10})\.[a-z]{2,10}',
       '#ajax' => [
-        'callback' => '::validSymb',
-        'event' => 'keyup',
+        'callback' => '::validSymbEdit',
+        'event' => 'change',
       ],
     ];
 
-    $form['upload-img'] = [
+    $form['edit-upload-img'] = [
       '#type' => 'managed_file',
       '#title' => t('Profile Picture'),
       '#default_value' => (isset($data['image'])) ? [$data['image']] : [],
@@ -85,15 +85,15 @@ class EditForm extends FormBase {
       ],
     ];
 
-    $form['massage'] = [
+    $form['edit-massage'] = [
       '#type' => 'markup',
-      '#markup' => '<div id="result_message"></div>',
+      '#markup' => '<div id="edit-result_message"></div>',
     ];
-    $form['submit'] = [
+    $form['edit-submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Save changes'),
       '#ajax' => [
-        'callback' => '::setMessage',
+        'callback' => '::setMessageEdit',
         'event' => 'click',
       ],
     ];
@@ -105,10 +105,10 @@ class EditForm extends FormBase {
    * Return messenge about form status.
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $picture = $form_state->getValue('upload-img');
+    $picture = $form_state->getValue('edit-upload-img');
     $data = [
-      'name' => $form_state->getValue('name'),
-      'email' => $form_state->getValue('email'),
+      'name' => $form_state->getValue('edit-name'),
+      'email' => $form_state->getValue('edit-email'),
       'image' => $picture[0],
     ];
     $file = File::load($picture[0]);
@@ -147,33 +147,33 @@ class EditForm extends FormBase {
   /**
    * Symbols input validation.
    */
-  public function validSymb(array &$form, FormStateInterface $form_state):object {
+  public function validSymbEdit(array &$form, FormStateInterface $form_state):object {
     $regular = '/[-_@aA-zZ.]/';
-    $line = $form_state->getValue('email');
+    $line = $form_state->getValue('edit-email');
 
     $response = new AjaxResponse();
     for ($i = 0; $i < strlen($line); $i++) {
       if (!preg_match($regular, $line[$i])) {
         $response->addCommand(
           new HtmlCommand(
-            '#valid_message',
-            '<div class="invalid-message">' . $this->t('You can use only letters and "-" or "_" or "@"')
+            '#edit-valid_message',
+            '<div class="edit-invalid-message">' . $this->t('You can use only letters and "-" or "_" or "@"')
           )
         );
         $response->addCommand(
-          new CssCommand('.form-email', ['border-color' => 'red'])
+          new CssCommand('.edit-form-email', ['border-color' => 'red'])
         );
         break;
       }
       else {
         $response->addCommand(
           new HtmlCommand(
-            '#valid_message',
+            '#edit-valid_message',
             ''
           )
         );
         $response->addCommand(
-          new CssCommand('.form-email', ['border-color' => '#ced4da'])
+          new CssCommand('.edit-form-email', ['border-color' => '#ced4da'])
         );
       }
     }
@@ -183,21 +183,21 @@ class EditForm extends FormBase {
   /**
    * Function for message with info what was sended.
    */
-  public function setMessage(array &$form, FormStateInterface $form_state):object {
+  public function setMessageEdit(array &$form, FormStateInterface $form_state):object {
     \Drupal::messenger()->deleteAll();
 
     $response = new AjaxResponse();
 
-    if (!preg_match('/^[aA-zZ]{2,32}$/', $form_state->getValue('name'))) {
+    if (!preg_match('/^[aA-zZ]{2,32}$/', $form_state->getValue('edit-name'))) {
       $response->addCommand(
         new HtmlCommand(
-          '#name_message',
-          '<div class="invalid-message">' . $this->t("The cat's name should contain only Latin characters")
+          '#edit-name_message',
+          '<div class="edit-invalid-message">' . $this->t("The cat's name should contain only Latin characters")
         )
       );
       $response->addCommand(
         new CssCommand(
-          '#edit-name',
+          '#edit-edit-name',
           ['border-color' => 'red']
         )
       );
@@ -205,8 +205,8 @@ class EditForm extends FormBase {
     if ($form_state->hasAnyErrors()) {
       $response->addCommand(
         new HtmlCommand(
-          '#result_message',
-          '<div class="form-cat-message error">' .
+          '#edit-result_message',
+          '<div class="edit-form-cat-message error">' .
           $this->t('you entered incorrect information')
         )
       );

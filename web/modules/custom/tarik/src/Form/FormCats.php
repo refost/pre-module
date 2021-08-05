@@ -118,7 +118,7 @@ class FormCats extends FormBase {
     $response = new AjaxResponse();
     for ($i = 0; $i < strlen($line); $i++) {
       if (!preg_match($regular, $line[$i])) {
-        $response->addCommand(
+          $response->addCommand(
           new HtmlCommand(
             '#valid_message',
             '<div class="invalid-message">' . $this->t('You can use only letters and "-" or "_" or "@"')
