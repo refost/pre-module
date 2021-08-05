@@ -14,3 +14,12 @@ tarik.delete_form:
     _title: 'DeleteForm'
   requirements:
     _permission: 'administer site configuration'
+
+
+tarik.edit_form:
+  path: '/admin/tarik/{id}/edit'
+  defaults:
+    _form: '\Drupal\tarik\Form\EditForm'
+    _title: 'EditForm'
+  requirements:
+    _permission: 'administer site configuration'

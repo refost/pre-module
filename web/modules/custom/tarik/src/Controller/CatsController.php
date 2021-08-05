@@ -12,12 +12,12 @@ use Drupal\Core\Url;
 class CatsController extends ControllerBase {
 
   /**
-   * Function create link that activate modal window.
+   * Function create link that use modal window.
    */
-  public function linkDelete($link):array {
+  public function linkCreate($title, $link):array {
     return [
       '#type' => 'link',
-      '#title' => 'Delete',
+      '#title' => $title,
       '#url' => $link,
       '#options' => [
         'attributes' => [
@@ -38,14 +38,16 @@ class CatsController extends ControllerBase {
     $query->fields('cats', ['id', 'name', 'email', 'image', 'date']);
     $results = $query->execute()->fetchAll();
     $rows = [];
-    $linkEdit = t('Edit');
     foreach ($results as $data) {
       $fid = $data->image;
       $file = File::load($fid);
       $path = $file->getFileUri();
 
       $url_delete = Url::fromRoute('tarik.delete_form', ['id' => $data->id], []);
-      $linkDelete = $this->linkDelete($url_delete);
+      $linkDelete = $this->linkCreate('Delete', $url_delete);
+
+      $url_edit = Url::fromRoute('tarik.edit_form', ['id' => $data->id], []);
+      $linkEdit = $this->linkCreate('Edit', $url_edit);
 
       $image = [
         '#theme' => 'image',

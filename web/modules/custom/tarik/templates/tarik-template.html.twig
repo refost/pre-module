@@ -31,7 +31,7 @@
       {% if user.hasPermission('administer nodes') %}
       <div class="manage">
         {{ row['delete'] }}
-        <a href="#">{{ row['edit'] }}</a>
+        {{ row['edit'] }}
       </div>
       {% endif %}
     </div>
