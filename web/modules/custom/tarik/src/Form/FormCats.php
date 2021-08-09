@@ -37,7 +37,7 @@ class FormCats extends FormBase {
       '#placeholder' => $this->t('min length - 2 symbols, min - 32'),
       '#required' => TRUE,
       '#maxlength' => 32,
-      '#pattern' => '[aA-zZ]{2,32}',
+      '#pattern' => '^[\w+]{2,32}$',
     ];
 
     $form['email-valid'] = [
@@ -49,7 +49,7 @@ class FormCats extends FormBase {
       '#title' => $this->t('Your email:'),
       '#placeholder' => $this->t('your@mail.com'),
       '#required' => TRUE,
-      '#pattern' => '[-_aA-zZ]{2,30}@([a-z]{2,10})\.[a-z]{2,10}',
+      '#pattern' => '^[-_aA-zZ]{2,30}@([a-z]{2,10})\.[a-z]{2,10}$',
       '#ajax' => [
         'callback' => '::validSymb',
         'event' => 'keyup',
@@ -71,13 +71,13 @@ class FormCats extends FormBase {
       '#type' => 'markup',
       '#markup' => '<div id="result_message"></div>',
     ];
-    $form['submit'] = [
-      '#type' => 'submit',
-      '#value' => $this->t('Add cat'),
-      '#ajax' => [
-        'callback' => '::setMessage',
-        'event' => 'click',
-      ],
+      $form['submit'] = [
+        '#type' => 'submit',
+        '#value' => $this->t('Add cat'),
+        '#ajax' => [
+          'callback' => '::setMessage',
+          'event' => 'click',
+        ],
     ];
 
     return $form;
@@ -152,7 +152,7 @@ class FormCats extends FormBase {
 
     $response = new AjaxResponse();
 
-    if (!preg_match('/^[aA-zZ]{2,32}$/', $form_state->getValue('name'))) {
+    if (!preg_match('/^[\w+]{2,32}$/', $form_state->getValue('name'))) {
       $response->addCommand(
         new HtmlCommand(
           '#name_message',

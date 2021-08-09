@@ -64,7 +64,7 @@ class CatsController extends ControllerBase {
         'name' => $data->name,
         'email' => $data->email,
         'image' => ['data' => $image],
-        'date' => date('d-m-Y H:i:s', $data->date),
+        'date' => date('d-m-Y H:i:s', ($data->date)+$_COOKIE['time']*60),
         'delete' => $linkDelete,
         'edit' => $linkEdit,
       ];
@@ -73,6 +73,8 @@ class CatsController extends ControllerBase {
     if (!$rows == NULL) {
       krsort($rows);
     }
+
+    var_dump($_COOKIE);
 
     return $rows;
   }
