@@ -7,10 +7,13 @@ use Drupal\Core\Form\ConfirmFormBase;
 use Drupal\Core\Url;
 
 /**
- * Class DeleteForm.
+ * Class DeleteForm that delete form.
  */
 class DeleteForm extends ConfirmFormBase {
 
+  /**
+   * {@inheritdoc}
+   */
   public $id;
 
   /**
@@ -73,7 +76,6 @@ class DeleteForm extends ConfirmFormBase {
   /**
    * Function delete record and change file status.
    */
-
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $database = \Drupal::database();
 

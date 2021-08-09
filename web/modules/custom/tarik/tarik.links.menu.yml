@@ -1,0 +1,6 @@
+tarik.cats_form.collection:
+  title: 'Tarik'
+  parent: system.admin_structure
+  description: 'Manage records.'
+  route_name: tarik.manage_form
+  weight: 100

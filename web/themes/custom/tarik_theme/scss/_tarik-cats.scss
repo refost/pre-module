@@ -61,6 +61,33 @@
 }
 
 
+.form-cats, .edit-form {
+  .alert{
+    border: none;
+  }
+  .alert-success{
+    background-color: $mint;
+    text-align: center;
+  }
+  .alert-danger{
+    text-align: center;
+    background-color: $pink;
+    padding-left: 0;
+    padding-right: 0;
+    li{
+      background-color: $pink;
+      text-align: center;
+      border: none;
+      padding-right: 0;
+    }
+  }
+  .form-managed-file {
+    .is-invalid {
+      background-image: none !important;
+    }
+  }
+}
+
 .form-cats{
   padding: 30px 0;
   margin: 0 auto;
@@ -105,25 +132,6 @@
     .error{
       background-color: transparent;
       box-shadow: none;
-    }
-  }
-  .alert{
-    border: none;
-  }
-  .alert-success{
-    background-color: $mint;
-    text-align: center;
-  }
-  .alert-danger{
-    text-align: center;
-    background-color: $pink;
-    padding-left: 0;
-    padding-right: 0;
-    li{
-      background-color: $pink;
-      text-align: center;
-      border: none;
-      padding-right: 0;
     }
   }
 }

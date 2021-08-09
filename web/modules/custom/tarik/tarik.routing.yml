@@ -23,3 +23,20 @@ tarik.edit_form:
     _title: 'EditForm'
   requirements:
     _permission: 'administer site configuration'
+
+tarik.manage_form:
+  path: '/admin/structure/tarik-manage'
+  defaults:
+    _title: 'Manage records'
+    _controller: 'Drupal\tarik\Controller\CatsAdminController::manage'
+  requirements:
+    _permission: 'administer site configuration'
+
+
+tarik.confirm_form:
+  path: '/admin/structure/confirm-delete'
+  defaults:
+    _title: 'Manage records'
+    _form: '\Drupal\tarik\Form\ConfirmForm'
+  requirements:
+    _permission: 'administer site configuration'
