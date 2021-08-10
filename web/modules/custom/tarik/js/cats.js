@@ -1,12 +1,6 @@
 let x = new Date();
 let currentTimeZoneOffsetInHours = x.getTimezoneOffset();
-let time;
-if (currentTimeZoneOffsetInHours < 0) {
-  time = Math.abs(currentTimeZoneOffsetInHours);
-} else {
-  time = 0-currentTimeZoneOffsetInHours;
-}
-document.cookie = 'time = ' + encodeURIComponent(time);
+document.cookie = 'time = ' + encodeURIComponent(currentTimeZoneOffsetInHours);
 
 let modal = document.getElementById("imgModal");
 let images = document.getElementsByClassName("cat-picture");

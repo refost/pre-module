@@ -156,7 +156,7 @@ class FormCats extends FormBase {
       $response->addCommand(
         new HtmlCommand(
           '#name_message',
-          '<div class="invalid-message">' . $this->t("The cat's name should contain only Latin characters")
+          '<div class="invalid-message">' . $this->t("The cat's name must be longer than 2 and shorter than 32 symbol")
         )
       );
       $response->addCommand(

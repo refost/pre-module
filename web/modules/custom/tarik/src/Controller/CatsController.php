@@ -64,7 +64,7 @@ class CatsController extends ControllerBase {
         'name' => $data->name,
         'email' => $data->email,
         'image' => ['data' => $image],
-        'date' => date('d-m-Y H:i:s', ($data->date)+$_COOKIE['time']*60),
+        'date' => date('d-m-Y H:i:s', ($data->date)-$_COOKIE['time']*60),
         'delete' => $linkDelete,
         'edit' => $linkEdit,
       ];
