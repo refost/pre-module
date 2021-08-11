@@ -74,8 +74,6 @@ class CatsController extends ControllerBase {
       krsort($rows);
     }
 
-    var_dump($_COOKIE);
-
     return $rows;
   }
 
